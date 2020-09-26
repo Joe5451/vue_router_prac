@@ -18,6 +18,9 @@
                 <li>
                     <router-link to="/about">About</router-link>
                 </li>
+                <li>
+                    <router-link to="/user/heyhey789">userId</router-link>
+                </li>
             </ul>
         </nav>
 
@@ -28,11 +31,29 @@
     // 定義模板
     const Home = { template: `<div>Home</div>` };
     const About = { template: `<div>About</div>` };
+    // 定義嵌套路由模板
+    const User = { template: `
+        <div>
+            <div>user id: {{ $route.params.id }}</div>
+            <router-link to="/user/ben456/contact">Contact</router-link>
+            <router-link to="/user/joejoe123/post">Post</router-link>
+            <router-view></router-view>
+        </div>
+    ` };
+    const Contact = { template: `<div>Contact</div>` };
+    const Post = { template: `<div>Post</div>` };
 
     // 定義路由
     const routes = [
         { path: '/', component: Home },
-        { path: '/about', component: About }
+        { path: '/about', component: About },
+        { path: '/user/:id', component: User,
+            children: [
+                { path: '', component: { template: `<div>User</div>` } }, // 路徑為 /user/:id 匹配成功
+                { path: 'contact', component: Contact }, // 路徑為 /user/:id/contact 匹配成功
+                { path: 'post', component: Post } // 路徑為 /user/:id/post 匹配成功
+            ]
+        }
     ];
 
     // 建立 router 實體物件，將 routes 傳入配置
