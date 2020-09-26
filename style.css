@@ -1,0 +1,28 @@
+ul {
+    list-style: none;
+}
+
+.navbar {
+    background: #000;
+}
+
+.navbar ul {
+    display: flex;
+    padding: 15px 12px;
+}
+
+.navbar ul li a {
+    padding: 8px 12px;
+    color: #fff;
+    text-decoration: none;
+    transition: color .5s;
+}
+
+.navbar ul li a:hover {
+    color: orange;
+}
+
+/* 注意! 與其使用 .router-link-active，不如使用更精準的 .router-link-exact-active 才會正確的顯示 */
+.navbar ul li .router-link-exact-active {
+    color: orange;
+}
