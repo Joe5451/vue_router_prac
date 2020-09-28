@@ -18,8 +18,16 @@
                 <li>
                     <router-link to="/about">About</router-link>
                 </li>
+                <li>
+                    <router-link :to="{ name: 'user', params: { id: 'joe123' }}">User</router-link>
+                    <!-- 下面兩種效果一樣 -->
+                    <!-- <router-link to="/user/joe123">User</router-link> -->
+                    <!-- <a href="#" @click.prevent="pushUser('joe123')">User</a> -->
+                </li>
             </ul>
         </nav>
+
+        當前路徑：{{$route.path}}
 
         <router-view></router-view>
     </div>
@@ -28,11 +36,14 @@
     // 定義模板
     const Home = { template: `<div>Home</div>` };
     const About = { template: `<div>About</div>` };
+    const User = { template: `<div>User id: {{ $route.params.id }}</div>` };
 
     // 定義路由
     const routes = [
         { path: '/', component: Home },
-        { path: '/about', component: About }
+        { path: '/about', component: About },
+        // 命名路由
+        { path: '/user/:id', name: 'user', component: User }
     ];
 
     // 建立 router 實體物件，將 routes 傳入配置
@@ -42,7 +53,13 @@
 
     // 建立 Vue 實體物件並掛載，傳入 router 配置，讓該應用程式具有路由功能
     const app = new Vue({
-        router
+        router,
+        methods: {
+            pushUser(id) {
+                if (this.$route.path !== `/user/${id}`)
+                    this.$router.push({ name: 'user', params: { id: 'joe123'}});
+            }
+        }
     }).$mount('#app');
 </script>
 </body>
