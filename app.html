@@ -21,6 +21,19 @@
             </ul>
         </nav>
 
+        <nav class="navbar">
+            <ul>
+                <li>
+                    <a href="#" @click.prevent="pushHome">push Home</a>
+                </li>
+                <li>
+                    <a href="#" @click.prevent="replaceHome">replace Home</a>
+                </li>
+            </ul>
+        </nav>
+
+        當前路徑： {{ $route.path }}
+
         <router-view></router-view>
     </div>
 
@@ -42,7 +55,31 @@
 
     // 建立 Vue 實體物件並掛載，傳入 router 配置，讓該應用程式具有路由功能
     const app = new Vue({
-        router
+        router,
+        data() {
+            return {
+                userId: 'joe123'
+            }
+        },
+        methods: {
+            pushHome() {
+                // 向 history 添加新記錄
+                // 參數為 string
+                if (this.$route.path !== '/') this.$router.push('/');
+
+                // 參數為 object
+                // if (this.$route.path !== '/') this.$router.push({ path: '/'});
+
+                // 如果當前路徑與欲 push 路徑相同會跳出錯誤，也可以用下面的方式，對錯誤都不處理就不會報錯
+                // 但我認為這不是一個好方法
+                // this.$router.push({ path: '/' }).catch(err => {});
+                
+            },
+            replaceHome() {
+                // 與 push 很像，但不同的是不會向 history 添加新記錄，而是取代當前的記錄
+                if (this.$route.path !== '/') this.$router.replace('/');
+            }
+        }
     }).$mount('#app');
 </script>
 </body>
