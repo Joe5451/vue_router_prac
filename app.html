@@ -18,6 +18,17 @@
                 <li>
                     <router-link to="/about">About</router-link>
                 </li>
+                <!-- 重定向 -->
+                <li>
+                    <router-link to="/toHome">Redirect To Home</router-link>
+                </li>
+                <!-- 別名 -->
+                <li>
+                    <router-link to="/a">A</router-link>
+                </li>
+                <li>
+                    <router-link to="/b">B</router-link>
+                </li>
             </ul>
         </nav>
 
@@ -28,11 +39,18 @@
     // 定義模板
     const Home = { template: `<div>Home</div>` };
     const About = { template: `<div>About</div>` };
+    const A = { template: `<div>/a</div>` };
 
     // 定義路由
     const routes = [
-        { path: '/', component: Home },
-        { path: '/about', component: About }
+        { path: '/',name: 'home', component: Home },
+        { path: '/about', component: About },
+        // 重定向，下面兩種都可以
+        { path: '/toHome', redirect: '/'},
+        // { path: '/toHome', redirect: { name: 'home' }},
+
+        // 別名，to="/b"，URL 會顯示 '/b'，但路由會匹配到 '/a'，就像訪問 '/a' 一樣，讓我們可以自由地映射到任意 URL
+        { path: '/a', component: A, alias: '/b' }
     ];
 
     // 建立 router 實體物件，將 routes 傳入配置
