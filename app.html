@@ -29,27 +29,23 @@
 
         <div>userId: {{ userId }}</div>
     </div>
-    
 
 <script>
-    // 定義模板
     const Home = { template: `<div>Home</div>` };
     const About = { template: `<div>About</div>` };
-    const User = { template: `<div>{{ $route.params.id }}</div>` };
+    // 使用 props 取得屬性
+    const User = { template: `<div>{{ $route.params.id }}<br />{{ id }}</div>`, props: ['id'] };
 
-    // 定義路由
     const routes = [
         { path: '/', component: Home },
         { path: '/about', component: About },
-        { path: '/user/:id', component: User } // 動態路由參數以冒號開頭，參數會被設置道 this.$route.params
+        { path: '/user/:id', component: User, props: true } // 添加 props 選項，route.params 將會被設置為組件屬性
     ];
 
-    // 建立 router 實體物件，將 routes 傳入配置
     const router = new VueRouter({
-        routes // 相當於 routes: routes
+        routes
     });
 
-    // 建立 Vue 實體物件並掛載，傳入 router 配置，讓該應用程式具有路由功能
     const app = new Vue({
         computed: {
             userId() {
